@@ -7,18 +7,23 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "gen": "drizzle-kit generate",
+    "push": "drizzle-kit push",
+    "studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@sidebase/nuxt-auth": "^0.9.2",
     "better-sqlite3": "^9.6.0",
-    "drizzle-orm": "^0.29.5",
+    "drizzle-orm": "^0.32.2",
     "nuxt": "^3.13.0",
     "vue": "latest",
     "vue-router": "latest"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.11",
     "autoprefixer": "^10.4.20",
-    "drizzle-kit": "^0.24.2",
+    "drizzle-kit": "^0.22.8",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.12"
   }
