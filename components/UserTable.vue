@@ -8,7 +8,7 @@
           <th class="py-2 px-4">First Name</th>
           <th class="py-2 px-4">Last Name</th>
           <th class="py-2 px-4">Role</th>
-          <th v-if="isAdmin" class="py-2 px-4">Options</th>
+          <th v-if="isModerator()" class="py-2 px-4">Options</th>
         </tr>
       </thead>
       <tbody>
@@ -22,7 +22,7 @@
           <td class="py-2 px-4 text-center">{{ user.firstName }}</td>
           <td class="py-2 px-4 text-center">{{ user.lastName }}</td>
           <td class="py-2 px-4 text-center">{{ user.role }}</td>
-          <td class="py-2 px-4 text-center" v-if="isAdmin">
+          <td class="py-2 px-4 text-center" v-if="isModerator()">
             <button
               @click="editUser(user.id)"
               class="text-blue-500 hover:underline mr-2"
@@ -30,6 +30,7 @@
               Edit
             </button>
             <button
+              v-if="isAdmin()"
               @click="handleDelete(user.id)"
               class="text-red-500 hover:underline"
             >
@@ -44,16 +45,18 @@
 
 <script setup lang="ts">
 const { updateUser, deleteUser } = useEndpoints();
+const { data, status, signOut } = useAuth();
+
 const props = defineProps({
   users: {
     type: Array,
     required: true,
   },
-  isAdmin: {
-    type: Boolean,
-    default: false,
-  },
 });
+
+const userStat = data.value.user.role;
+console.log(userStat);
+const { isAdmin, isModerator, isUser } = useRoleCheck(userStat);
 
 const Emit = defineEmits(["reload"]);
 
