@@ -10,11 +10,6 @@
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <form class="space-y-6" @submit.prevent="handleSignup" method="POST">
-        <div v-if="error" class="border bg-red-200 rounded-md p-1.5">
-          <p class="text-sm text-center text-red-600">
-            {{ error }}
-          </p>
-        </div>
         <div>
           <label
             for="email"
@@ -35,13 +30,29 @@
           <label
             for="email"
             class="block text-sm font-medium leading-6 text-gray-900"
-            >Business Name</label
+            >First Name</label
           >
           <div class="mt-1">
             <input
               type="text"
-              v-model="businessName"
-              autocomplete="businessName"
+              v-model="firstName"
+              autocomplete="firstName"
+              required
+              class="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </div>
+        </div>
+        <div>
+          <label
+            for="email"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >Last Name</label
+          >
+          <div class="mt-1">
+            <input
+              type="text"
+              v-model="lastName"
+              autocomplete="lastName"
               required
               class="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
@@ -110,6 +121,12 @@
           </p>
         </div>
 
+        <div v-if="error" class="border bg-red-200 rounded-md p-1.5">
+          <p class="text-sm text-center text-red-600">
+            {{ error }}
+          </p>
+        </div>
+
         <div>
           <button
             type="submit"
@@ -137,14 +154,16 @@
 
 <script lang="ts" setup>
 definePageMeta({
-  middleware: "un-auth",
+  auth: { unauthenticatedOnly: true, navigateAuthenticatedTo: "/" },
 });
-import { useAuth } from "~/composables/useAuth";
 
-const { signup } = useAuth();
+const { signIn } = useAuth();
+
 const emailAddress = ref("");
-const businessName = ref("");
+const firstName = ref("");
+const lastName = ref("");
 const password = ref("");
+const role = ref("User");
 const confirmPassword = ref("");
 const error = ref("");
 const router = useRouter();
@@ -163,14 +182,45 @@ const toggleConfirmPasswordVisibility = () => {
 };
 
 const handleSignup = async () => {
-  error.value = "";
-  loading.value = true;
   try {
-    await signup(emailAddress.value, password.value, businessName.value);
-    router.push("/dashboard");
+    let url = "http://localhost:3000/api/auth/register";
+    let options = {
+      method: "POST",
+      headers: {
+        Accept: "*/*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: emailAddress.value,
+        password: password.value,
+        firstName: firstName.value,
+        lastName: lastName.value,
+        role: role.value,
+      }),
+    };
+
+    const resp = await fetch(url, options);
+    if (!resp.ok) {
+      throw new Error(`Registration failed: ${resp.statusText}`);
+    }
+
+    const user = await resp.json();
+
+    const signResp = await signIn("credentials", {
+      email: emailAddress.value,
+      password: password.value,
+      redirect: false,
+      callbackUrl: "/",
+    });
+
+    if (signResp?.error) {
+      throw new Error(`Sign-in failed: ${(signResp as any).error}`);
+    }
+
+    return navigateTo((signResp as any).url, { external: true });
   } catch (err: any) {
-    error.value = err.error;
-    loading.value = false;
+    error.value = err.message;
+  } finally {
   }
 };
 </script>

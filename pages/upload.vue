@@ -2,7 +2,7 @@
   <div class="container flex flex-wrap py-6 px-4 mx-auto">
     <div class="mt-7 px-4 md:w-[25%]">
       <h2 class="text-lg font-bold leading-7 text-black">Profile</h2>
-      <div class="space-y-3">
+      <!-- <div class="space-y-3">
         <div class="flex flex-wrap gap-1">
           <p class="text-base font-semibold text-indigo-600">Business Name:</p>
           <p>{{ user.businessName }}</p>
@@ -11,7 +11,7 @@
           <p class="text-base font-semibold text-indigo-600">Business Email:</p>
           <p>{{ user.emailAddress }}</p>
         </div>
-      </div>
+      </div> -->
     </div>
     <form
       @submit.prevent="uploadHandler"
@@ -116,13 +116,7 @@
 <script setup>
 definePageMeta({
   layout: "auth-layout",
-  middleware: "auth",
 });
-
-import { useCookie } from "#app";
-
-const userCookie = useCookie("user");
-const userData = userCookie.value;
 
 const fileName = ref("");
 const fileAdded = ref(false);
@@ -173,6 +167,4 @@ const uploadHandler = () => {
     fileAdded.value = false;
   }, 1500);
 };
-
-const { user } = userData || {};
 </script>

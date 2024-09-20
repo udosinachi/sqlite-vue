@@ -1,7 +1,12 @@
+import { getServerSession } from "#auth";
 import { users } from "../../db/schema";
 import { db } from "../sqlite-service";
 
-export default defineEventHandler(async () => {
+export default defineEventHandler(async (event) => {
+  const session = await getServerSession(event);
+  if (!session) {
+    return { status: "Unauthenticated" };
+  }
   try {
     const userRes = db.select().from(users).all();
     return { users: userRes };

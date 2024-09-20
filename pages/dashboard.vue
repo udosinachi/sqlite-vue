@@ -7,13 +7,5 @@
 <script lang="ts" setup>
 definePageMeta({
   layout: "auth-layout",
-  middleware: "auth",
 });
-
-import { useCookie } from "#app";
-
-const userCookie = useCookie<any | null>("user");
-const userData = userCookie.value as any | null;
-
-const { user } = userData || {};
 </script>

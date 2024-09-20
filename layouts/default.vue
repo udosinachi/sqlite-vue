@@ -1,7 +1,8 @@
 <template>
   <div class="flex flex-col min-h-screen">
     <div class="flex-1">
-      <UnAuthNavbar />
+      <AuthNavbar v-if="status === 'authenticated'" />
+      <UnAuthNavbar v-else />
       <div>
         <slot />
       </div>
@@ -12,6 +13,8 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const { status } = useAuth();
+</script>
 
 <style lang="scss" scoped></style>

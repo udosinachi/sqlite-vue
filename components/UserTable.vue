@@ -1,0 +1,66 @@
+<template>
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+      <thead class="bg-gray-800 text-white">
+        <tr>
+          <th class="py-2 px-4">ID</th>
+          <th class="py-2 px-4">Email</th>
+          <th class="py-2 px-4">First Name</th>
+          <th class="py-2 px-4">Last Name</th>
+          <th class="py-2 px-4">Role</th>
+          <th v-if="isAdmin" class="py-2 px-4">Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="(user, index) in users"
+          :key="user.id"
+          class="border-b border-gray-200"
+        >
+          <td class="py-2 px-4 text-center">{{ user.id }}</td>
+          <td class="py-2 px-4 text-center">{{ user.email }}</td>
+          <td class="py-2 px-4 text-center">{{ user.firstName }}</td>
+          <td class="py-2 px-4 text-center">{{ user.lastName }}</td>
+          <td class="py-2 px-4 text-center">{{ user.role }}</td>
+          <td class="py-2 px-4 text-center" v-if="isAdmin">
+            <button
+              @click="editUser(user)"
+              class="text-blue-500 hover:underline mr-2"
+            >
+              Edit
+            </button>
+            <button
+              @click="deleteUser(user)"
+              class="text-red-500 hover:underline"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script setup lang="ts">
+const props = defineProps({
+  users: {
+    type: Array,
+    required: true,
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const emit = defineEmits(["editUser", "deleteUser"]);
+
+const editUser = (user) => {
+  emit("editUser", user);
+};
+
+const deleteUser = (user) => {
+  emit("deleteUser", user);
+};
+</script>

@@ -84,12 +84,10 @@
 
 <script lang="ts" setup>
 definePageMeta({
-  middleware: "un-auth",
+  auth: { unauthenticatedOnly: true, navigateAuthenticatedTo: "/" },
 });
-import { useAuth } from "~/composables/useAuth";
-
-const { login } = useAuth();
 const router = useRouter();
+const { signIn } = useAuth();
 
 const emailAddress = ref("");
 const password = ref("");
@@ -101,15 +99,40 @@ const togglePasswordVisibility = () => {
 };
 
 const handleLogin = async () => {
-  error.value = "";
-  loading.value = true;
   try {
-    await login(emailAddress.value, password.value);
-    router.push("/dashboard");
+    let url = "http://localhost:3000/api/auth/login";
+    let options = {
+      method: "POST",
+      headers: {
+        Accept: "*/*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: emailAddress.value,
+        password: password.value,
+      }),
+    };
+
+    const resp = await fetch(url, options);
+    if (!resp.ok) {
+      throw new Error(`Login failed: ${resp.statusText}`);
+    }
+
+    const user = await resp.json();
+
+    const loginResp = await signIn("credentials", {
+      email: emailAddress.value,
+      password: password.value,
+    });
+
+    if (loginResp?.error) {
+      throw new Error(`Sign-in failed: ${(loginResp as any).error}`);
+    }
+
+    return navigateTo((loginResp as any).url, { external: true });
   } catch (err: any) {
-    error.value = err.error;
+    error.value = err.message;
   } finally {
-    loading.value = false;
   }
 };
 </script>

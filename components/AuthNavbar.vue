@@ -25,6 +25,11 @@
             </div>
             <div class="hidden md:block">
               <div class="ml-4 flex items-center md:ml-6">
+                <div
+                  class="text-sm mt-1 mr-5 font-medium leading-none text-white"
+                >
+                  {{ data.user.role }}
+                </div>
                 <button
                   type="button"
                   class="relative rounded-full bg-white p-1 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -70,7 +75,7 @@
                     v-if="isToggled"
                   >
                     <div
-                      @click="logout"
+                      @click="signOut"
                       class="block px-4 py-2 text-sm text-gray-700 cursor-pointer"
                     >
                       Sign out
@@ -148,10 +153,12 @@
               </div>
               <div class="ml-3">
                 <div class="text-base font-medium leading-none text-white">
-                  {{ user.businessName }}
+                  {{ data.user.email }}
                 </div>
-                <div class="text-sm font-medium leading-none text-gray-400">
-                  {{ user.emailAddress }}
+                <div
+                  class="text-sm mt-1 font-medium leading-none text-gray-400"
+                >
+                  {{ data.user.role }}
                 </div>
               </div>
               <button
@@ -178,7 +185,7 @@
             </div>
             <div class="mt-3 space-y-1 px-2">
               <div
-                @click="logout"
+                @click="signOut"
                 class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white"
               >
                 Sign out
@@ -187,30 +194,16 @@
           </div>
         </div>
       </nav>
-
-      <header class="bg-white shadow">
-        <div class="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
-          <h1 class="text-lg font-bold tracking-tight text-gray-900">
-            {{ route.name.toUpperCase() }}
-          </h1>
-        </div>
-      </header>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useRoute } from "vue-router";
+const { data, signOut } = useAuth();
 
 const route = useRoute();
 const isToggled = ref(false);
 const isToggledHamburger = ref(false);
-
-import { useCookie } from "#app";
-const userCookie = useCookie("user");
-const userData = userCookie.value;
-
-const { user } = userData || {};
 
 const showOption = () => {
   isToggled.value = !isToggled.value;
@@ -218,8 +211,6 @@ const showOption = () => {
 const showHamburger = () => {
   isToggledHamburger.value = !isToggledHamburger.value;
 };
-
-const { logout } = useLogout();
 </script>
 
 <style scoped>
