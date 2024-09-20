@@ -8,23 +8,14 @@
               <div class="flex-shrink-0">
                 <h1 class="text-white font-bold text-xl">Udo Upload</h1>
               </div>
-              <div class="hidden md:block">
-                <div class="ml-10 flex items-baseline space-x-4">
-                  <NuxtLink
-                    to="/dashboard"
-                    class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-gray-300"
-                    >Dashboard</NuxtLink
-                  >
-                  <NuxtLink
-                    to="/upload"
-                    class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-gray-300"
-                    >Admin Users</NuxtLink
-                  >
-                </div>
-              </div>
             </div>
             <div class="hidden md:block">
               <div class="ml-4 flex items-center md:ml-6">
+                <div
+                  class="text-md mt-1 mr-5 font-medium leading-none text-white"
+                >
+                  {{ data.user.email }}
+                </div>
                 <div
                   class="text-sm mt-1 mr-5 font-medium leading-none text-white"
                 >
@@ -130,18 +121,6 @@
 
         <!-- Mobile menu, show/hide based on menu state. -->
         <div class="md:hidden" v-if="isToggledHamburger">
-          <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-            <NuxtLink
-              to="/dashboard"
-              class="block rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-gray-300"
-              >Dashboard</NuxtLink
-            >
-            <NuxtLink
-              to="/upload"
-              class="block rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-gray-300"
-              >Admin Users</NuxtLink
-            >
-          </div>
           <div class="border-t border-gray-700 pb-3 pt-4">
             <div class="flex items-center px-5">
               <div class="flex-shrink-0">

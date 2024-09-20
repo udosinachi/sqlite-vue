@@ -24,7 +24,7 @@
           <td class="py-2 px-4 text-center">{{ user.role }}</td>
           <td class="py-2 px-4 text-center" v-if="isModerator()">
             <button
-              @click="editUser(user.id)"
+              @click="openEditModal(user)"
               class="text-blue-500 hover:underline mr-2"
             >
               Edit
@@ -40,6 +40,15 @@
         </tr>
       </tbody>
     </table>
+
+    <div v-if="isModalOpen">jjj</div>
+
+    <EditUserModal
+      :isOpen="isModalOpen"
+      :user="selectedUser"
+      @close="closeEditModal"
+      @updateUser="updateUserHandler"
+    />
   </div>
 </template>
 
@@ -59,6 +68,25 @@ console.log(userStat);
 const { isAdmin, isModerator, isUser } = useRoleCheck(userStat);
 
 const Emit = defineEmits(["reload"]);
+
+const isModalOpen = ref(false);
+const selectedUser = ref(null);
+
+const openEditModal = (user) => {
+  selectedUser.value = user;
+  isModalOpen.value = true;
+};
+
+const closeEditModal = () => {
+  isModalOpen.value = false;
+  Emit("reload");
+};
+
+const updateUserHandler = (id: number) => {
+  updateUser(id);
+  Emit("reload");
+  closeEditModal();
+};
 
 const handleDelete = (id: number) => {
   deleteUser(id);

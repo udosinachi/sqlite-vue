@@ -1,8 +1,9 @@
-export const useRoleCheck = (user: any) => {
-  const isAdmin = () => user === "Admin";
-  const isModerator = () => ["Admin", "Moderator"].includes(user);
-  const isAllUsers = () => ["Admin", "Moderator", "User"].includes(user);
-  const isUser = () => user === "User";
+export const useRoleCheck = (user: string) => {
+  const isAdmin = () => user.toLowerCase() === "admin";
+  const isModerator = () => ["admin", "moderator"].includes(user.toLowerCase());
+  const isAllUsers = () =>
+    ["admin", "moderator", "user"].includes(user.toLowerCase());
+  const isUser = () => user.toLowerCase() === "User";
 
   return { isAdmin, isModerator, isUser, isAllUsers };
 };
