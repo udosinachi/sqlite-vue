@@ -21,7 +21,7 @@
       </div>
       <div>
         <span class="block text-2xl font-bold">62</span>
-        <span class="block text-gray-500">Total Uploads</span>
+        <span class="block text-gray-500">Total Users</span>
       </div>
     </div>
     <div class="flex items-center p-8 bg-white shadow rounded-lg">
@@ -45,7 +45,7 @@
       </div>
       <div>
         <span class="block text-2xl font-bold">6.8</span>
-        <span class="block text-gray-500">Average Uploads</span>
+        <span class="block text-gray-500">Average Users</span>
       </div>
     </div>
     <div class="flex items-center p-8 bg-white shadow rounded-lg">
@@ -72,7 +72,7 @@
         <span class="inline-block text-xl text-gray-500 font-semibold"
           >(14%)</span
         >
-        <span class="block text-gray-500">Failed Uploads</span>
+        <span class="block text-gray-500">Failed Users</span>
       </div>
     </div>
     <div class="flex items-center p-8 bg-white shadow rounded-lg">
@@ -96,7 +96,7 @@
       </div>
       <div>
         <span class="block text-2xl font-bold">83%</span>
-        <span class="block text-gray-500">Finished Uploads</span>
+        <span class="block text-gray-500">Finished Users</span>
       </div>
     </div>
   </section>

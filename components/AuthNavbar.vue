@@ -18,7 +18,7 @@
                   <NuxtLink
                     to="/upload"
                     class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-gray-300"
-                    >Upload Document</NuxtLink
+                    >Admin Users</NuxtLink
                   >
                 </div>
               </div>
@@ -139,7 +139,7 @@
             <NuxtLink
               to="/upload"
               class="block rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-gray-300"
-              >Upload Document</NuxtLink
+              >Admin Users</NuxtLink
             >
           </div>
           <div class="border-t border-gray-700 pb-3 pt-4">

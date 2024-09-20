@@ -13,7 +13,7 @@
       </thead>
       <tbody>
         <tr
-          v-for="(user, index) in users"
+          v-for="(user, index) in users.users"
           :key="user.id"
           class="border-b border-gray-200"
         >
@@ -24,13 +24,13 @@
           <td class="py-2 px-4 text-center">{{ user.role }}</td>
           <td class="py-2 px-4 text-center" v-if="isAdmin">
             <button
-              @click="editUser(user)"
+              @click="editUser(user.id)"
               class="text-blue-500 hover:underline mr-2"
             >
               Edit
             </button>
             <button
-              @click="deleteUser(user)"
+              @click="handleDelete(user.id)"
               class="text-red-500 hover:underline"
             >
               Delete
@@ -43,6 +43,7 @@
 </template>
 
 <script setup lang="ts">
+const { updateUser, deleteUser } = useEndpoints();
 const props = defineProps({
   users: {
     type: Array,
@@ -54,13 +55,10 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["editUser", "deleteUser"]);
+const Emit = defineEmits(["reload"]);
 
-const editUser = (user) => {
-  emit("editUser", user);
-};
-
-const deleteUser = (user) => {
-  emit("deleteUser", user);
+const handleDelete = (id: number) => {
+  deleteUser(id);
+  Emit("reload");
 };
 </script>

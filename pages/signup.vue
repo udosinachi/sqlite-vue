@@ -4,7 +4,7 @@
       <h2
         class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
       >
-        Sign up to Udo Uploads
+        Sign up to Udo Users
       </h2>
     </div>
 

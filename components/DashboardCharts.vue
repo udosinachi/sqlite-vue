@@ -3,7 +3,7 @@
     class="flex flex-col md:col-span-2 md:row-span-2 bg-white shadow rounded-lg mt-10"
   >
     <div class="px-6 py-5 font-semibold border-b border-gray-100">
-      The number of businesses and uploads per month
+      The number of Users per month
     </div>
     <div class="p-4 flex-grow">
       <div

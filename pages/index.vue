@@ -1,26 +1,20 @@
 <template>
   <div class="container mx-auto max-w-7xl p-4">
-    <P>{{ JSON.stringify(data) }}</P>
-    <P>{{ status }}</P>
-
-    <!-- <pre>{{ JSON.stringify(users, null, 3) }}</pre> -->
-
-    <div>
-      <UserTable
-        :users="users"
-        :isAdmin="false"
-        @editUser="handleEdit"
-        @deleteUser="handleDelete"
-      />
+    <DashboardCards />
+    <div class="mt-6">
+      <UserTable :users="users" :isAdmin="true" @reload="fetchData()" />
     </div>
 
-    <button @click="signOut">Signout</button>
-    <DashboardCards />
-    <DashboardCharts />
+    <!-- <DashboardCharts /> -->
   </div>
 </template>
 <script lang="ts" setup>
 const { data, status, signOut } = useAuth();
+const { users, fetchUsers } = useEndpoints();
 
-const { data: users } = useFetch("/api/users");
+const fetchData = () => {
+  fetchUsers();
+};
+
+fetchData();
 </script>
